@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Flask on OpenShift
 ==================
 
@@ -38,3 +39,9 @@ To read more about logging in Flask please see this email
 
 http://flask.pocoo.org/mailinglist/archive/2012/1/27/catching-exceptions-from-flask/
 
+=======
+dataninja
+=========
+
+Dataninja is a tool to fetch data from multiple sources via web services.
+>>>>>>> 6ed6314e3b089f63308808808e3d13b904116e36

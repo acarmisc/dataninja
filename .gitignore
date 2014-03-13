@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 .project
 *.pyc
 *.pyo
 *~
 venv/
+=======
+*.log
+*.pot
+*.pyc
+local_settings.py
+>>>>>>> 6ed6314e3b089f63308808808e3d13b904116e36
