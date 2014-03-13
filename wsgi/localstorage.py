@@ -8,10 +8,12 @@ class LocalStorage(object):
 
     config = ConfigParser.RawConfigParser()
 
-    config.read('config.ini')
-
-    db_url = config.get('mongodb', 'db_url') or os.environ['OPENSHIFT_MONGODB_DB_URL']
-    db_name = config.get('mongodb', 'db_name') or os.environ['OPENSHIFT_APP_NAME']
+    if config.read('config.ini'):
+        db_url = config.get('mongodb', 'db_url')
+        db_name = config.get('mongodb', 'db_name')
+    else:
+        db_url = os.environ['OPENSHIFT_MONGODB_DB_URL']
+        db_name = os.environ['OPENSHIFT_APP_NAME']
 
     conn = pymongo.Connection(db_url)
     db = conn[db_name]
