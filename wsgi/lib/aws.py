@@ -19,15 +19,15 @@ class AWS(object):
         return product
 
     def getByEAN(self, code):
+        products = []
         product = self.amazon.lookup(ItemId=code,
                                      IdType='EAN',
                                      SearchIndex='All')
 
-        if product.title:
-            product = self.formatify(product)
-        else:
-            product = []
-        return product
+        # should return only one element
+        products.append(self.formatify(product))
+
+        return products
 
     def getItem(self, code):
         return self.getByEAN(code)

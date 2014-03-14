@@ -7,6 +7,7 @@ sys.path.append('..')
 import dataninja
 from lib.localstorage import LocalStorage as LS
 from lib.aws import AWS
+from lib.ebay import Ebay
 
 
 class DataninjaTest(unittest.TestCase):
@@ -54,12 +55,20 @@ class DataninjaTest(unittest.TestCase):
         assert True
 
     # testing amazonstorage
-    def test_getItemByEAN(self):
-        """ Testing getting item by EAN code """
+    def test_amazonGetItemByEAN(self):
+        """ Testing getting item from Amazon by EAN code """
         aws = AWS()
         data = aws.getByEAN('9788817169547')
 
         assert data
+
+    # testing ebay
+    def test_ebayGetItemByEAN(self):
+        """ Testing getting item from Ebay by EAN code """
+        ebay = Ebay()
+        data = ebay.getByEAN('9788817169547')
+
+        assert data.ack == 'Success'
 
 if __name__ == '__main__':
     unittest.main()
