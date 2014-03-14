@@ -17,28 +17,27 @@ def version():
     return jsonify(version=__version__)
 
 
+def buildData(source, data):
+    r = {'source': source, 'data': data, 'size': len(data)}
+    # TODO: store data
+    return r
+
+
 @app.route("/item/<code>", methods=['GET'])
 def getItem(code):
     aws = AWS()
     ls = LS()
     ebay = Ebay()
+
     res = []
 
     # local storage
-    found = ls.getItem(code)
-    r = {'source': 'LocalStorage', 'data': found, 'size': len(found)}
-    res.append(r)
+    res.append(buildData('LocalStorage', ls.getItem(code)))
     # TODO: if not found locally looking elsewhere
 
-    # amazon
-    found = aws.getItem(code)
-    r = {'source': 'AWS', 'data': found, 'size': len(found)}
-    res.append(r)
-
-    # ebay
-    found = ebay.getItem(code)
-    r = {'source': 'Ebay', 'data': found, 'size': len(found)}
-    res.append(r)
+    # external sources
+    res.append(buildData('AWS', aws.getItem(code)))
+    res.append(buildData('Ebay', ebay.getItem(code)))
 
     return jsonify({'results': res})
 

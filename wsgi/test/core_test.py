@@ -40,13 +40,6 @@ class DataninjaTest(unittest.TestCase):
 
         assert pid
 
-    def test_getItemDb(self):
-        """ Testing item fetch from temp db """
-        ls = LS()
-        res = ls.getItem('9788817169547')
-
-        assert len(res) > 0
-
     def test_dropDb(self):
         """ Testing the database dropping """
         ls = LS()
@@ -68,7 +61,7 @@ class DataninjaTest(unittest.TestCase):
         ebay = Ebay()
         data = ebay.getByEAN('9788817169547')
 
-        assert data.ack == 'Success'
+        assert data
 
 if __name__ == '__main__':
     unittest.main()

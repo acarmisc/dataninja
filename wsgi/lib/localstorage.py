@@ -48,16 +48,10 @@ class LocalStorage(object):
         products = []
         results = self.db.products.find({'code': code})
         for r in results:
-            prod = Product(**r)
-            products.append({'storageId': prod._id.__str__(),
-                             'code': prod.code,
-                             'name': prod.name,
-                             'description': prod.description})
+
+            product = Product(storageId=r['_id'].__str__(),
+                              code=r['code'],
+                              name=r['name'])
+            products.append(product.__dict__)
 
         return products
-
-    def storeProduct(self, data):
-        products = self.db.products
-        pid = products.insert(data)
-
-        return pid

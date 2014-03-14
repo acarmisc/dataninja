@@ -1,5 +1,10 @@
 import os
+import sys
 from amazon.api import AmazonAPI
+
+
+sys.path.append('..')
+from models.product import Product
 
 
 class AWS(object):
@@ -9,15 +14,6 @@ class AWS(object):
 
     amazon = AmazonAPI(amazon_key, amazon_secret, amazon_code)
 
-    def formatify(self, product):
-
-        product = {'storageId': product.asin,
-                   'code': product.ean,
-                   'name': product.title,
-                   'description': ''}
-
-        return product
-
     def getByEAN(self, code):
         products = []
         product = self.amazon.lookup(ItemId=code,
@@ -25,7 +21,10 @@ class AWS(object):
                                      SearchIndex='All')
 
         # should return only one element
-        products.append(self.formatify(product))
+        product = Product(storageId=product.asin,
+                          code=code,
+                          name=product.title)
+        products.append(product.__dict__)
 
         return products
 
