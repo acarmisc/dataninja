@@ -55,3 +55,9 @@ class LocalStorage(object):
                              'description': prod.description})
 
         return products
+
+    def storeProduct(self, data):
+        products = self.db.products
+        pid = products.insert(data)
+
+        return pid

@@ -1,10 +1,14 @@
 from flask import Flask, jsonify
-from localstorage import LocalStorage
-
+from lib.localstorage import LocalStorage as LS
+from lib.aws import AWS
+import ConfigParser
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 __version__ = '0.1'
+__environ__ = 'dev'
+
+config = ConfigParser.RawConfigParser()
 
 
 @app.route("/version")
@@ -14,17 +18,20 @@ def version():
 
 @app.route("/item/<code>", methods=['GET'])
 def getItem(code):
+    aws = AWS()
+    ls = LS()
     res = []
 
     # local storage
-    ls = LocalStorage()
-    data = ls.getItem(code)
-
-    r = {'source': 'LocalStorage', 'data': data}
+    found = ls.getItem(code)
+    r = {'source': 'LocalStorage', 'data': found}
     res.append(r)
+    # TODO: if not found locally looking elsewhere
 
     # amazon
-    # TODO
+    found = aws.getItem(code)
+    r = {'source': 'AWS', 'data': found}
+    res.append(r)
 
     # ebay
     # TODO

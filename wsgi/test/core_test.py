@@ -5,7 +5,8 @@ import random
 
 sys.path.append('..')
 import dataninja
-from localstorage import LocalStorage
+from lib.localstorage import LocalStorage as LS
+from lib.aws import AWS
 
 
 class DataninjaTest(unittest.TestCase):
@@ -26,32 +27,39 @@ class DataninjaTest(unittest.TestCase):
 
     def test_getItem(self):
         """ Testing getItem function with false data """
-        res = self.app.get('/item/1234567890123')
+        res = self.app.get('/item/9788817169547')
 
-        assert "1234567890123" in res.data
+        assert "9788817169547" in res.data
 
-    # testing localstore
+    # testing localstorage
     def test_createDb(self):
         """ Testing the database creation """
-        ls = LocalStorage()
+        ls = LS()
         pid = ls.createDb(self.db_testname)
 
         assert pid
 
     def test_getItemDb(self):
         """ Testing item fetch from temp db """
-        ls = LocalStorage()
-        res = ls.getItem('1234567890123')
+        ls = LS()
+        res = ls.getItem('9788817169547')
 
         assert len(res) > 0
 
     def test_dropDb(self):
         """ Testing the database dropping """
-        ls = LocalStorage()
+        ls = LS()
         ls.dropDb(self.db_testname)
 
         assert True
 
+    # testing amazonstorage
+    def test_getItemByEAN(self):
+        """ Testing getting item by EAN code """
+        aws = AWS()
+        data = aws.getByEAN('9788817169547')
+
+        assert data
 
 if __name__ == '__main__':
     unittest.main()
