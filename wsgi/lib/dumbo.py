@@ -1,4 +1,4 @@
-#import os
+import os
 import sys
 import json
 import urllib2
@@ -11,8 +11,11 @@ from models.product import Product
 
 class Dumbo(object):
     config = ConfigParser.RawConfigParser()
-    config.read('config.ini')
-    dumbo_url = config.get('dumbo', 'url') + '/products/'
+
+    if config.read('config.ini'):
+        dumbo_url = config.get('dumbo', 'url') + '/products/'
+    else:
+        dumbo_url = os.environ['dumbo_url'] + '/products/'
 
     def getByEAN(self, code):
         products = []
