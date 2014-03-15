@@ -16,15 +16,17 @@ class AWS(object):
 
     def getByEAN(self, code):
         products = []
-        product = self.amazon.lookup(ItemId=code,
-                                     IdType='EAN',
-                                     SearchIndex='All')
-
-        # should return only one element
-        product = Product(storageId=product.asin,
-                          code=code,
-                          name=product.title)
-        products.append(product.__dict__)
+        try:
+            product = self.amazon.lookup(ItemId=code,
+                                         IdType='EAN',
+                                         SearchIndex='All')
+            # should return only one element
+            product = Product(storageId=product.asin,
+                              code=code,
+                              name=product.title)
+            products.append(product.__dict__)
+        except:
+            pass
 
         return products
 

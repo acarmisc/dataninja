@@ -8,6 +8,7 @@ import dataninja
 from lib.localstorage import LocalStorage as LS
 from lib.aws import AWS
 from lib.ebay import Ebay
+from lib.dumbo import Dumbo
 
 
 class DataninjaTest(unittest.TestCase):
@@ -60,6 +61,14 @@ class DataninjaTest(unittest.TestCase):
         """ Testing getting item from Ebay by EAN code """
         ebay = Ebay()
         data = ebay.getByEAN('9788817169547')
+
+        assert data
+
+    # testing dumbo
+    def test_dumboGetItemByEAN(self):
+        """ Testing getting item from Dumbo by EAN code """
+        dumbo = Dumbo()
+        data = dumbo.getByEAN('1234567890123')
 
         assert data
 

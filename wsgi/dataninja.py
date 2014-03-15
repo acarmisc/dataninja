@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from lib.localstorage import LocalStorage as LS
 from lib.aws import AWS
 from lib.ebay import Ebay
+from lib.dumbo import Dumbo
 import ConfigParser
 
 app = Flask(__name__)
@@ -28,6 +29,7 @@ def getItem(code):
     aws = AWS()
     ls = LS()
     ebay = Ebay()
+    dumbo = Dumbo()
 
     res = []
 
@@ -36,6 +38,7 @@ def getItem(code):
     # TODO: if not found locally looking elsewhere
 
     # external sources
+    res.append(buildData('Dumbo', dumbo.getItem(code)))
     res.append(buildData('AWS', aws.getItem(code)))
     res.append(buildData('Ebay', ebay.getItem(code)))
 
