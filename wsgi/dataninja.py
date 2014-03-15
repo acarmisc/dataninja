@@ -29,7 +29,7 @@ def getItem(code):
     aws = AWS()
     ls = LS()
     ebay = Ebay()
-    dumbo = Dumbo()
+    #dumbo = Dumbo()
 
     res = []
 
