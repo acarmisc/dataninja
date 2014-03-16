@@ -3,6 +3,7 @@ from lib.localstorage import LocalStorage as LS
 from lib.aws import AWS
 from lib.ebay import Ebay
 from lib.dumbo import Dumbo
+from lib.outpan import Outpan
 import ConfigParser
 
 app = Flask(__name__)
@@ -30,6 +31,7 @@ def getItem(code):
     ls = LS()
     ebay = Ebay()
     dumbo = Dumbo()
+    outpan = Outpan()
 
     res = []
 
@@ -41,6 +43,7 @@ def getItem(code):
     res.append(buildData('Dumbo', dumbo.getItem(code)))
     res.append(buildData('AWS', aws.getItem(code)))
     res.append(buildData('Ebay', ebay.getItem(code)))
+    res.append(buildData('Outpan', outpan.getItem(code)))
 
     return jsonify({'results': res})
 
