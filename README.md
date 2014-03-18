@@ -13,3 +13,5 @@ To preserve the repository secret free we put the credentials in some environmen
     echo "export ebay_appid=<string>" >> ~/app-root/data/.bash_profile
 
     echo "export dumbo_url=http://dumbourl.com/" >> ~/app-root/data/.bash_profile
+
+    echo "export outpan_url=<string>" >> ~/app-root/data/.bash_profile
