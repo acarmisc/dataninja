@@ -22,6 +22,7 @@ def version():
 def buildData(source, data):
     r = {'source': source, 'data': data, 'size': len(data)}
     # TODO: store data
+    # call dumbo 
     return r
 
 
@@ -42,6 +43,7 @@ def getItem(code):
     # external sources
     res.append(buildData('Dumbo', dumbo.getItem(code)))
     res.append(buildData('AWS', aws.getItem(code)))
+    res.append(buildData('AWS-UPC', aws.getByUPC(code)))
     res.append(buildData('Ebay', ebay.getItem(code)))
     res.append(buildData('Outpan', outpan.getItem(code)))
 

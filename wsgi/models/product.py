@@ -1,9 +1,6 @@
 """
-class Product(object):
-    def __init__(self, **entries):
-        self.__dict__.update(entries)
+Model for Product is a test. 
 """
-
 
 class Product(object):
 
@@ -12,3 +9,4 @@ class Product(object):
         self.code = code
         self.name = name
         self.description = description
+

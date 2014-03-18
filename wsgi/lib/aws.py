@@ -14,6 +14,22 @@ class AWS(object):
 
     amazon = AmazonAPI(amazon_key, amazon_secret, amazon_code)
 
+    def getByUPC(self, code):
+        products = []
+        try:
+            product = self.amazon.lookup(ItemId=code,
+                                         IdType='UPC',
+                                         SearchIndex='All')
+            # should return only one element
+            product = Product(storageId=product.asin,
+                              code=code,
+                              name=product.title)
+            products.append(product.__dict__)
+        except:
+            pass
+
+        return products
+
     def getByEAN(self, code):
         products = []
         try:
@@ -30,5 +46,5 @@ class AWS(object):
 
         return products
 
-    def getItem(self, code):
+    def getItem(self, code, ctype = False):
         return self.getByEAN(code)
