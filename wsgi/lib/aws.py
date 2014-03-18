@@ -46,11 +46,10 @@ class AWS(object):
 
         return products
 
-    def getItem(self, code, ctype = False):
+    def getItem(self, code, ctype=False, request=False):
         if ctype == 'UPC':
             res = self.getByUPC(code)
         else:
             res = self.getByEAN(code)
 
         return res
-

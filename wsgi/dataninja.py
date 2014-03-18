@@ -1,9 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from lib.localstorage import LocalStorage as LS
 from lib.aws import AWS
 from lib.ebay import Ebay
 from lib.dumbo import Dumbo
 from lib.outpan import Outpan
+from models.history import History
 import ConfigParser
 
 app = Flask(__name__)
@@ -21,13 +22,12 @@ def version():
 
 def buildData(source, data):
     r = {'source': source, 'data': data, 'size': len(data)}
-    # TODO: store data
-    # call dumbo 
+
     return r
 
 
 @app.route("/item/<code>", methods=['GET'])
-def getItem(code):
+def getAllSources(code):
     aws = AWS()
     ls = LS()
     ebay = Ebay()
@@ -36,18 +36,29 @@ def getItem(code):
 
     res = []
 
-    # local storage
     res.append(buildData('LocalStorage', ls.getItem(code)))
-    # TODO: if not found locally looking elsewhere
 
-    # external sources
     res.append(buildData('Dumbo', dumbo.getItem(code)))
-    res.append(buildData('AWS', aws.getItem(code)))
-    res.append(buildData('AWS-UPC', aws.getItem(code, 'UPC')))
+    res.append(buildData('AWS', aws.getItem(code, request=request)))
+    res.append(buildData('AWS-UPC', aws.getItem(code, 'UPC', request=request)))
     res.append(buildData('Ebay', ebay.getItem(code)))
     res.append(buildData('Outpan', outpan.getItem(code)))
 
+    # saving query to db
+    data = {'found': len(res)}
+    History(request, code=code, action='getAllSources', data=data).save()
+
     return jsonify({'results': res})
+
+
+@app.route("/history", methods=['GET'])
+def getHistory():
+    h = History()
+
+    res = h.find()
+
+    return res
+
 
 if __name__ == "__main__":
     app.run(debug=True)

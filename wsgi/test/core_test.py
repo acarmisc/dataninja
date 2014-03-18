@@ -41,6 +41,14 @@ class DataninjaTest(unittest.TestCase):
 
         assert pid
 
+    def test_writeHistory(self):
+        """ Testing history """
+        ls = LS()
+        data = {'name': 'testing'}
+        cid = ls.writeHistory(data)
+
+        assert cid
+
     def test_dropDb(self):
         """ Testing the database dropping """
         ls = LS()

@@ -35,6 +35,22 @@ class LocalStorage(object):
 
         return pid
 
+    def writeHistory(self, data):
+        """ write data to database """
+        history = self.db.history
+        try:
+            cid = history.insert(data.__dict__)
+        except:
+            pass
+
+        return cid
+
+    def getHistory(self):
+        """ fetch data from database """
+        history = self.db.history
+
+        return history.find()
+
     def dropDb(self, testname=False):
         if testname:
             res = self.conn.drop_database(testname)
