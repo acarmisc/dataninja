@@ -43,7 +43,7 @@ def getItem(code):
     # external sources
     res.append(buildData('Dumbo', dumbo.getItem(code)))
     res.append(buildData('AWS', aws.getItem(code)))
-    res.append(buildData('AWS-UPC', aws.getByUPC(code)))
+    res.append(buildData('AWS-UPC', aws.getItem(code, 'UPC')))
     res.append(buildData('Ebay', ebay.getItem(code)))
     res.append(buildData('Outpan', outpan.getItem(code)))
 
