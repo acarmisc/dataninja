@@ -12,10 +12,14 @@ from models.product import Product
 class Outpan(object):
     config = ConfigParser.RawConfigParser()
 
+    """
     if config.read('config.ini'):
         url = config.get('outpan', 'url')
     else:
         url = os.environ['outpan_url']
+    """
+    #FIXME
+    url = 'http://www.outpan.com/view_product.php?&format=json&barcode='
 
     def getByEAN(self, code):
         products = []
