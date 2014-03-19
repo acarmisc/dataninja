@@ -54,10 +54,17 @@ def getAllSources(code):
 @app.route("/history", methods=['GET'])
 def getHistory():
     h = History()
+    res = []
+    els = h.find()
 
-    res = h.find()
+    for el in els:
+        #import pdb; pdb.set_trace()
+        res.append({'code': el['code'],
+                    'action': el['action'],
+                    'client_addr': el['client_addr'],
+                    'timestamp': el['timestamp']})
 
-    return res
+    return jsonify({'results': res})
 
 
 if __name__ == "__main__":
