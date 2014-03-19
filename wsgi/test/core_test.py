@@ -1,9 +1,6 @@
-import sys
 import unittest
 import random
 
-
-sys.path.append('..')
 import dataninja
 from lib.localstorage import LocalStorage as LS
 from lib.aws import AWS
