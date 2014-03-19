@@ -38,6 +38,7 @@ class LocalStorage(object):
     def writeHistory(self, data):
         """ write data to database """
         history = self.db.history
+        cid = False
         try:
             cid = history.insert(data.__dict__)
         except:

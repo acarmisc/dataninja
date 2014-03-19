@@ -39,8 +39,8 @@ def getAllSources(code):
     res.append(buildData('LocalStorage', ls.getItem(code)))
 
     res.append(buildData('Dumbo', dumbo.getItem(code)))
-    res.append(buildData('AWS', aws.getItem(code, request=request)))
-    res.append(buildData('AWS-UPC', aws.getItem(code, 'UPC', request=request)))
+    res.append(buildData('AWS', aws.getItem(code)))
+    res.append(buildData('AWS-UPC', aws.getItem(code, 'UPC')))
     res.append(buildData('Ebay', ebay.getItem(code)))
     res.append(buildData('Outpan', outpan.getItem(code)))
 
@@ -58,11 +58,10 @@ def getHistory():
     els = h.find()
 
     for el in els:
-        #import pdb; pdb.set_trace()
         res.append({'code': el['code'],
                     'action': el['action'],
-                    'client_addr': el['client_addr'],
-                    'timestamp': el['timestamp']})
+                    'timestamp': el['timestamp'],
+                    'data': el['data']})
 
     return jsonify({'results': res})
 
